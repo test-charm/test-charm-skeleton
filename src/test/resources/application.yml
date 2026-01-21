@@ -17,13 +17,8 @@ spring:
         default_catalog: db
         dialect: org.hibernate.dialect.MySQL5Dialect
 
-logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
-
 mock-server:
   endpoint: http://mock-server.tool.net:9081
 
 binstd-endpoint:
   key: test
-
-standalone-dev-endpoint:
-  url: http://mock-server.tool.net:9081
