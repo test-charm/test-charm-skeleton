@@ -1,32 +1,73 @@
 package com.odde.atddv2;
 
 import com.github.leeonky.cucumber.restful.RestfulStep;
+import com.github.leeonky.jfactory.JFactory;
+import com.github.leeonky.util.Sneaky;
 import com.odde.atddv2.entity.User;
-import com.odde.atddv2.repo.OrderRepo;
-import com.odde.atddv2.repo.UserRepo;
 import io.cucumber.java.Before;
 import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.SneakyThrows;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.test.context.ContextConfiguration;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceUnit;
+import java.sql.Statement;
+import java.util.Collection;
+import java.util.Set;
+import java.util.function.Consumer;
 
 @ContextConfiguration(classes = {CucumberConfiguration.class}, loader = SpringBootContextLoader.class)
 @CucumberContextConfiguration
 public class ApplicationSteps {
 
     @Autowired
-    private UserRepo userRepo;
+    private JFactory jFactory;
 
-    @Autowired
-    private OrderRepo orderRepo;
+    @PersistenceUnit
+    private EntityManagerFactory entityManagerFactory;
 
-    @Before(order = 1)
+    private Set<String> allTableNames() {
+        return Set.of(
+                "users",
+                "orders",
+                "order_lines"
+        );
+    }
+
+    private void cleanTables(Collection<String> tables) {
+        executeDB(entityManager -> entityManager.unwrap(Session.class).doWork(connection -> Sneaky.run(() -> {
+            try (Statement stmt = connection.createStatement()) {
+                stmt.execute("SET FOREIGN_KEY_CHECKS=0");
+
+                for (String table : tables) {
+                    int deleted = stmt.executeUpdate("DELETE FROM `" + table + "`");
+                    if (deleted > 0) stmt.execute("ALTER TABLE `" + table + "` AUTO_INCREMENT = 1");
+                }
+
+                stmt.execute("SET FOREIGN_KEY_CHECKS=1");
+            }
+        })));
+    }
+
+    private void executeDB(Consumer<EntityManager> consumer) {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        transaction.begin();
+        consumer.accept(manager);
+        transaction.commit();
+        manager.close();
+    }
+
+    @Before(value = "not @test-migration and not @restart-required", order = 0)
     public void clearDB() {
-        userRepo.deleteAll();
-        orderRepo.deleteAll();
+        jFactory.getDataRepository().clear();
+        cleanTables(allTableNames());
     }
 
     @Autowired
@@ -41,7 +82,7 @@ public class ApplicationSteps {
     @Before("@api-login")
     public void apiLogin() {
         User defaultUser = new User().setUserName("j").setPassword("j");
-        userRepo.save(defaultUser);
+        jFactory.spec("用户").property("userName", "j").property("password", "j").create();
         RestfulStep loginRestfulStep = new RestfulStep();
         loginRestfulStep.setBaseUrl("http://localhost:10082");
         loginRestfulStep.post("/users/login", defaultUser);

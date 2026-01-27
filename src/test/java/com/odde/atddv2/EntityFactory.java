@@ -14,5 +14,8 @@ public class EntityFactory extends JFactory {
 
     private void configFactory() {
         Classes.subTypesOf(Spec.class, "com.odde.atddv2.spec").forEach(c -> register((Class) c));
+
+        ignoreDefaultValue(p -> p.getName().equals("id"));
+        ignoreDefaultValue(p -> p.getName().equals("createdAt"));
     }
 }
