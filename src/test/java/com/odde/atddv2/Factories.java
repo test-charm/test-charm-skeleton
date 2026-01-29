@@ -1,6 +1,8 @@
 package com.odde.atddv2;
 
+import com.github.leeonky.jfactory.CompositeDataRepository;
 import com.github.leeonky.jfactory.JFactory;
+import com.github.leeonky.jfactory.MemoryDataRepository;
 import com.github.leeonky.jfactory.repo.JPADataRepository;
 import lombok.SneakyThrows;
 import org.mockserver.client.MockServerClient;
@@ -31,6 +33,8 @@ public class Factories {
 
     @Bean
     public JFactory factorySet() {
-        return new EntityFactory(new JPADataRepository(entityManagerFactory.createEntityManager()));
+        return new EntityFactory(
+                new CompositeDataRepository(new MemoryDataRepository())
+                        .registerByPackage("com.odde.atddv2.entity", new JPADataRepository(entityManagerFactory.createEntityManager())));
     }
 }

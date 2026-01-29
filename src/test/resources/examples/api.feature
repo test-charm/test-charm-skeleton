@@ -58,35 +58,46 @@
     假如存在"订单":
       | code  | productName | total | recipientName | recipientMobile | recipientAddress | status     | deliverNo     | deliveredAt          |
       | SN001 | 电脑          | 19999 | 张三            | 13085901735     | 上海市长宁区           | delivering | 4313751158896 | 2022-02-26T16:25:01Z |
-    并且存在快递单"4313751158896"的物流信息如下
-    """
-    {
-        "status": 0,
-        "msg": "ok",
-        "result": {
-            "number": "4313751158896",
-            "type": "yunda",
-            "typename": "韵达快运",
-            "logo": "https://api.jisuapi.com/express/static/images/logo/80/yunda.png",
-            "list": [
-                {
-                    "time": "2021-04-16 23:51:55",
-                    "status": "【潍坊市】已离开 山东潍坊分拨中心；发往 成都东地区包"
-                },
-                {
-                    "time": "2021-04-16 23:45:47",
-                    "status": "【潍坊市】已到达 山东潍坊分拨中心"
-                },
-                {
-                    "time": "2021-04-16 16:47:35",
-                    "status": "【潍坊市】山东青州市公司-赵良涛(13606367012) 已揽收"
+    假如Mock API:
+      """
+      : {
+        path.value= '/express/query'
+        method.value= 'GET'
+        queryStringParameterList: | +name.value | values.value[][0] |
+                                  | appkey      | *                 |
+                                  | number      | '4313751158896'   |
+                                  | type        | auto              |
+      }
+      ---
+      body: ```
+            {
+              "status": 0,
+              "msg": "ok",
+              "result": {
+                  "number": "4313751158896",
+                  "type": "yunda",
+                  "typename": "韵达快运",
+                  "logo": "https://api.jisuapi.com/express/static/images/logo/80/yunda.png",
+                  "list": [
+                      {
+                          "time": "2021-04-16 23:51:55",
+                          "status": "【潍坊市】已离开 山东潍坊分拨中心；发往 成都东地区包"
+                      },
+                      {
+                          "time": "2021-04-16 23:45:47",
+                          "status": "【潍坊市】已到达 山东潍坊分拨中心"
+                      },
+                      {
+                          "time": "2021-04-16 16:47:35",
+                          "status": "【潍坊市】山东青州市公司-赵良涛(13606367012) 已揽收"
+                      }
+                  ],
+                  "deliverystatus": 1,
+                  "issign": 0
                 }
-            ],
-            "deliverystatus": 1,
-            "issign": 0
-        }
-    }
-    """
+              }
+            ```
+      """
     当GET "/orders/SN001"
     那么response should be:
     """
