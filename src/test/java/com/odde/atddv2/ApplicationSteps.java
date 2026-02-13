@@ -1,6 +1,7 @@
 package com.odde.atddv2;
 
 import com.github.leeonky.cucumber.restful.RestfulStep;
+import com.github.leeonky.dal.Assertions;
 import com.github.leeonky.jfactory.JFactory;
 import com.github.leeonky.util.Sneaky;
 import com.odde.atddv2.entity.User;
@@ -9,6 +10,7 @@ import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.SneakyThrows;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -31,6 +33,14 @@ public class ApplicationSteps {
 
     @PersistenceUnit
     private EntityManagerFactory entityManagerFactory;
+
+    @Value("${testcharm.dal.dumpinput:true}")
+    private boolean dalDumpInput;
+
+    @Before
+    public void disableDALDump() {
+        Assertions.dumpInput(dalDumpInput);
+    }
 
     private Set<String> allTableNames() {
         return Set.of(
