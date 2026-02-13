@@ -3,6 +3,7 @@ package com.odde.atddv2.spec;
 import com.github.leeonky.jfactory.Spec;
 import com.github.leeonky.jfactory.Trait;
 import com.odde.atddv2.entity.Order;
+import com.odde.atddv2.entity.OrderLine;
 
 import static com.odde.atddv2.entity.Order.OrderStatus.toBeDelivered;
 
@@ -11,6 +12,7 @@ public class Orders {
         @Override
         public void main() {
             property("id").ignore();
+            property("lines").reverseAssociation("order");
         }
 
         @Trait
@@ -20,4 +22,12 @@ public class Orders {
             property("deliveredAt").value(null);
         }
     }
+
+    public static class 订单项 extends Spec<OrderLine> {
+        @Override
+        public void main() {
+            property("id").ignore();
+        }
+    }
+
 }
