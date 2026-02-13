@@ -64,7 +64,7 @@ public class ApplicationSteps {
         manager.close();
     }
 
-    @Before(value = "not @test-migration and not @restart-required", order = 0)
+    @Before(order = 0)
     public void clearDB() {
         jFactory.getDataRepository().clear();
         cleanTables(allTableNames());
