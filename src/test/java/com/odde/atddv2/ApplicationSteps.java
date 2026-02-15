@@ -20,8 +20,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceUnit;
 import java.sql.Statement;
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 
 @ContextConfiguration(classes = {CucumberConfiguration.class}, loader = SpringBootContextLoader.class)
@@ -43,11 +42,11 @@ public class ApplicationSteps {
     }
 
     private Set<String> allTableNames() {
-        return Set.of(
+        return new HashSet<>(Arrays.asList(
                 "users",
                 "orders",
                 "order_lines"
-        );
+        ));
     }
 
     private void cleanTables(Collection<String> tables) {

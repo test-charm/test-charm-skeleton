@@ -34,6 +34,9 @@ configurations {
     }
 }
 
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
 ext {
     set('jfactoryDal', '0.8.1-alpha.26')
 }

@@ -9,7 +9,10 @@ import io.cucumber.java.zh_cn.并且;
 import org.mockserver.client.MockServerClient;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.github.leeonky.dal.Assertions.expect;
@@ -38,12 +41,12 @@ public class MockServerSteps {
     public void mock_api(String mock) {
         String[] requestAndResponses = mock.split("---");
 
-        var responseBuilders = IntStream.range(1, requestAndResponses.length)
+        List<DALMockServer.ResponseBuilder> responseBuilders = IntStream.range(1, requestAndResponses.length)
                 .mapToObj(i -> (DALMockServer.ResponseBuilder)
                         jData.prepare("DefaultResponseBuilder", Table.create(requestAndResponses[i].trim())).get(0))
-                .toList();
+                .collect(Collectors.toList());
 
-        dalMockServer.mock(Map.of(requestAndResponses[0].trim(), responseBuilders));
+        dalMockServer.mock(Collections.singletonMap(requestAndResponses[0].trim(), responseBuilders));
     }
 
     @并且("验证Mock API:")

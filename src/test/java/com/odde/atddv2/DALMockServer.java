@@ -18,6 +18,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.mockserver.model.HttpRequest.request;
@@ -66,7 +67,7 @@ public class DALMockServer {
                 Collections.reverse(entries);
                 for (Map.Entry<String, List<ResponseBuilder>> entry : entries) {
                     String expectation = entry.getKey();
-                    var responseBuilders = entry.getValue();
+                    List<ResponseBuilder> responseBuilders = entry.getValue();
                     if (responseBuilders.size() == 1) {
                         ResponseBuilder response = responseBuilders.get(0);
                         try {
@@ -74,7 +75,7 @@ public class DALMockServer {
                             if (response.times > 0) {
                                 int currentTime = responseTimes.get(expectation).incrementAndGet();
                                 if (currentTime > response.times) {
-                                    unexpectations.add(new Unexpectation(expectation, "times %s more than %s".formatted(currentTime, response.times)));
+                                    unexpectations.add(new Unexpectation(expectation, String.format("times %s more than %s", currentTime, response.times)));
                                     continue;
                                 }
                             }
@@ -92,14 +93,14 @@ public class DALMockServer {
                     } else {
                         responseBuilders = responseBuilders.stream().flatMap(
                                 responseBuilder -> IntStream.range(0, responseBuilder.times == 0 ? 1 : responseBuilder.times).mapToObj(i -> responseBuilder)
-                        ).toList();
+                        ).collect(Collectors.toList());
                         try {
                             DAL.dal("MockD").evaluate(httpRequest, expectation);
                             int currentTime = responseTimes.get(expectation).getAndIncrement();
                             if (currentTime >= responseBuilders.size()) {
-                                unexpectations.add(new Unexpectation(expectation, "times %s more than %s".formatted(currentTime, responseBuilders.size())));
+                                unexpectations.add(new Unexpectation(expectation, String.format("times %s more than %s", currentTime, responseBuilders.size())));
                             } else {
-                                var response = responseBuilders.get(currentTime);
+                                ResponseBuilder response = responseBuilders.get(currentTime);
                                 if (response.delayResponse > 0) delay(response);
                                 HttpResponse httpResponse = HttpResponse.response().withStatusCode(response.code)
                                         .withContentType(MediaType.APPLICATION_JSON);
@@ -174,7 +175,7 @@ public class DALMockServer {
                 if (e.getValue() instanceof List)
                     return new Header(e.getKey(), ((List<?>) e.getValue()).stream().map(String::valueOf).toArray(String[]::new));
                 return new Header(e.getKey(), String.valueOf(e.getValue()));
-            }).toList();
+            }).collect(Collectors.toList());
         }
 
         @SneakyThrows
