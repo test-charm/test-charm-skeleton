@@ -1,11 +1,11 @@
-package com.odde.atddv2.spec;
+package org.testcharm.spec;
 
 import com.github.leeonky.jfactory.Spec;
 import com.github.leeonky.jfactory.Trait;
-import com.odde.atddv2.entity.Order;
-import com.odde.atddv2.entity.OrderLine;
+import org.testcharm.entity.Order;
+import org.testcharm.entity.OrderLine;
 
-import static com.odde.atddv2.entity.Order.OrderStatus.toBeDelivered;
+import static org.testcharm.entity.Order.OrderStatus.toBeDelivered;
 
 public class Orders {
     public static class 订单 extends Spec<Order> {

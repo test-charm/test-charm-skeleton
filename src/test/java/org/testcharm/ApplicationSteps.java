@@ -1,10 +1,10 @@
-package com.odde.atddv2;
+package org.testcharm;
 
 import com.github.leeonky.cucumber.restful.RestfulStep;
 import com.github.leeonky.dal.Assertions;
 import com.github.leeonky.jfactory.JFactory;
 import com.github.leeonky.util.Sneaky;
-import com.odde.atddv2.entity.User;
+import org.testcharm.entity.User;
 import io.cucumber.java.Before;
 import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.SneakyThrows;

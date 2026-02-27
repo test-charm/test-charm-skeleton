@@ -1,7 +1,7 @@
-package com.odde.atddv2.spec;
+package org.testcharm.spec;
 
 import com.github.leeonky.jfactory.Spec;
-import com.odde.atddv2.DALMockServer;
+import org.testcharm.DALMockServer;
 
 public class ResponseBuilders {
     public static class DefaultResponseBuilder extends Spec<DALMockServer.ResponseBuilder> {

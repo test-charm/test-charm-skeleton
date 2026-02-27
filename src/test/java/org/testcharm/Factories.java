@@ -1,4 +1,4 @@
-package com.odde.atddv2;
+package org.testcharm;
 
 import com.github.leeonky.jfactory.CompositeDataRepository;
 import com.github.leeonky.jfactory.JFactory;
@@ -35,6 +35,6 @@ public class Factories {
     public JFactory factorySet() {
         return new EntityFactory(
                 new CompositeDataRepository(new MemoryDataRepository())
-                        .registerByPackage("com.odde.atddv2.entity", new JPADataRepository(entityManagerFactory.createEntityManager())));
+                        .registerByPackage("org.testcharm.entity", new JPADataRepository(entityManagerFactory.createEntityManager())));
     }
 }

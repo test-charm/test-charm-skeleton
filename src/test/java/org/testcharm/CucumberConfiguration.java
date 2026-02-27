@@ -1,4 +1,4 @@
-package com.odde.atddv2;
+package org.testcharm;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

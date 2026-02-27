@@ -1,4 +1,4 @@
-package com.odde.atddv2;
+package org.testcharm;
 
 import com.github.leeonky.jfactory.cucumber.JData;
 import com.github.leeonky.jfactory.cucumber.Table;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 

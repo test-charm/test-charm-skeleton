@@ -1,7 +1,7 @@
-package com.odde.atddv2.spec;
+package org.testcharm.spec;
 
 import com.github.leeonky.jfactory.Spec;
-import com.odde.atddv2.entity.User;
+import org.testcharm.entity.User;
 
 public class Users {
 

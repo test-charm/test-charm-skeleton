@@ -1,4 +1,4 @@
-package com.odde.atddv2.entity;
+package org.testcharm.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;

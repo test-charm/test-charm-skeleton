@@ -1,4 +1,4 @@
-package com.odde.atddv2.entity;
+package org.testcharm.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

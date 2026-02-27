@@ -1,4 +1,4 @@
-package com.odde.atddv2;
+package org.testcharm;
 
 import com.github.leeonky.jfactory.DataRepository;
 import com.github.leeonky.jfactory.JFactory;
@@ -13,7 +13,7 @@ public class EntityFactory extends JFactory {
     }
 
     private void configFactory() {
-        Classes.subTypesOf(Spec.class, "com.odde.atddv2.spec").forEach(c -> register((Class) c));
+        Classes.subTypesOf(Spec.class, "org.testcharm.spec").forEach(c -> register((Class) c));
 
         ignoreDefaultValue(p -> p.getName().equals("id"));
         ignoreDefaultValue(p -> p.getName().equals("createdAt"));
