@@ -115,6 +115,19 @@
         isSigned: "未签收"
     }
     """
+    并且数据应为:
+      """
+      : {
+        MockApi::filter: { GET[/express/query]: {...}}
+        : [{
+          params: {
+            appkey: *
+            number: '4313751158896'
+            type: auto
+          }
+        }]
+      }
+      """
 
   场景: 订单项查询
     假如存在"订单项":
