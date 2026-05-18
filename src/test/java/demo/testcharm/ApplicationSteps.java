@@ -1,10 +1,10 @@
-package org.testcharm;
+package demo.testcharm;
 
-import com.github.leeonky.cucumber.restful.RestfulStep;
-import com.github.leeonky.dal.Assertions;
-import com.github.leeonky.jfactory.JFactory;
-import com.github.leeonky.util.Sneaky;
-import org.testcharm.entity.User;
+import org.testcharm.cucumber.restful.RestfulStep;
+import org.testcharm.dal.Assertions;
+import org.testcharm.jfactory.JFactory;
+import org.testcharm.util.Sneaky;
+import demo.testcharm.entity.User;
 import io.cucumber.java.Before;
 import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.SneakyThrows;
@@ -94,7 +94,7 @@ public class ApplicationSteps {
         jFactory.spec("用户").property("userName", "j").property("password", "j").create();
         RestfulStep loginRestfulStep = new RestfulStep();
         loginRestfulStep.setBaseUrl("http://localhost:10082");
-        loginRestfulStep.post("/users/login", defaultUser);
+        loginRestfulStep.postObjectInJson("/users/login", defaultUser);
         restfulStep.header("token", (String)loginRestfulStep.response("headers.Token"));
     }
 

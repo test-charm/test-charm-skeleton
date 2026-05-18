@@ -1,10 +1,10 @@
-package org.testcharm;
+package demo.testcharm;
 
-import com.github.leeonky.jfactory.CompositeDataRepository;
-import com.github.leeonky.jfactory.DataRepository;
-import com.github.leeonky.jfactory.JFactory;
-import com.github.leeonky.jfactory.MemoryDataRepository;
-import com.github.leeonky.jfactory.repo.JPADataRepository;
+import org.testcharm.jfactory.CompositeDataRepository;
+import org.testcharm.jfactory.DataRepository;
+import org.testcharm.jfactory.JFactory;
+import org.testcharm.jfactory.MemoryDataRepository;
+import org.testcharm.jfactory.repo.JPADataRepository;
 import lombok.SneakyThrows;
 import org.mockserver.client.MockServerClient;
 import org.mockserver.model.HttpRequest;
@@ -38,7 +38,7 @@ public class Factories {
     public JFactory factorySet(DALMockServer dalMockServer) {
         return new EntityFactory(
                 new CompositeDataRepository(new MemoryDataRepository())
-                        .registerByPackage("org.testcharm.entity", new JPADataRepository(entityManagerFactory.createEntityManager()))
+                        .registerByPackage("demo.testcharm.entity", new JPADataRepository(entityManagerFactory.createEntityManager()))
                         .registerByType(HttpRequest.class, new MockServerDataRepository(dalMockServer))
         );
     }

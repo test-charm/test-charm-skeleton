@@ -1,4 +1,4 @@
-package org.testcharm.entity;
+package demo.testcharm.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

@@ -1,6 +1,6 @@
-package org.testcharm.spec;
+package demo.testcharm.spec;
 
-import com.github.leeonky.jfactory.Spec;
+import org.testcharm.jfactory.Spec;
 import org.mockserver.model.HttpRequest;
 
 public class MockseverVerification {

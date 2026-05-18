@@ -1,11 +1,11 @@
-package org.testcharm.spec;
+package demo.testcharm.spec;
 
-import com.github.leeonky.jfactory.Spec;
-import com.github.leeonky.jfactory.Trait;
-import org.testcharm.entity.Order;
-import org.testcharm.entity.OrderLine;
+import org.testcharm.jfactory.Spec;
+import org.testcharm.jfactory.Trait;
+import demo.testcharm.entity.Order;
+import demo.testcharm.entity.OrderLine;
 
-import static org.testcharm.entity.Order.OrderStatus.toBeDelivered;
+import static demo.testcharm.entity.Order.OrderStatus.toBeDelivered;
 
 public class Orders {
     public static class 订单 extends Spec<Order> {

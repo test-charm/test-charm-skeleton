@@ -1,7 +1,7 @@
-package org.testcharm.spec;
+package demo.testcharm.spec;
 
-import com.github.leeonky.jfactory.Spec;
-import org.testcharm.DALMockServer;
+import org.testcharm.jfactory.Spec;
+import demo.testcharm.DALMockServer;
 
 public class ResponseBuilders {
     public static class DefaultResponseBuilder extends Spec<DALMockServer.ResponseBuilder> {

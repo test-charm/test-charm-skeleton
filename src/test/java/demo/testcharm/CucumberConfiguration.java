@@ -1,4 +1,4 @@
-package org.testcharm;
+package demo.testcharm;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

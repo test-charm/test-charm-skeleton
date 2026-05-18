@@ -1,9 +1,9 @@
-package org.testcharm;
+package demo.testcharm;
 
-import com.github.leeonky.jfactory.DataRepository;
-import com.github.leeonky.jfactory.JFactory;
-import com.github.leeonky.jfactory.Spec;
-import com.github.leeonky.util.Classes;
+import org.testcharm.jfactory.DataRepository;
+import org.testcharm.jfactory.JFactory;
+import org.testcharm.jfactory.Spec;
+import org.testcharm.util.Classes;
 
 public class EntityFactory extends JFactory {
 
@@ -13,7 +13,7 @@ public class EntityFactory extends JFactory {
     }
 
     private void configFactory() {
-        Classes.subTypesOf(Spec.class, "org.testcharm.spec").forEach(c -> register((Class) c));
+        Classes.subTypesOf(Spec.class, "demo.testcharm.spec").forEach(c -> register((Class) c));
 
         ignoreDefaultValue(p -> p.getName().equals("id"));
         ignoreDefaultValue(p -> p.getName().equals("createdAt"));
